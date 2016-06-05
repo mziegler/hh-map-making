@@ -23,8 +23,10 @@
         
         // Initialize the map
         // TODO #1 : Initialize the map!
-        var map = L.map('map_id');
         
+
+
+        // TODO #2  Set the view of the map to show India.
 
 
 
@@ -33,16 +35,8 @@
         // OSM Stamen Watercolor  http://d.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg
         // More base maps here:   http://mc.bbbike.org/mc/
         
-        // TODO #2  Add a tile layer for a base map.
-        L.tileLayer('http://c.tile.opentopomap.org/{z}/{x}/{y}.png').addTo(map);
-        
-        
-        
-        
-        
-        // TODO #3  Set the view of the map to show India.
-        map.fitBounds([ [8,69] , [34,97] ]);
-        
+        // TODO #3  Add a tile layer for a base map.
+      
         
         
         
@@ -57,23 +51,19 @@
             // Loop over CSV rows.
             for (var i = 0; i < data.length; i++) {
                 var row = data[i];
-                var imageURL = row['image file'].split(', ')[0];
+                var imageURL = row['image file'] ? row['image file'].split(', ')[0] : null;
                                                 
                                                 
                                                 
                 // TODO #4                             
                 // Add a marker to the map with the coordinates from the data point.
-                var marker = L.marker([row.latitude, row.longitude])
-                    .addTo(markerLayer);
                 
                 
                 
                 // TODO #5
                 // If there is an image for this data point, create a popup on this marker.
                 // '<img src="' + imageURL + '" style="width:200px;height:auto">'
-                if (imageURL) {
-                    marker.bindPopup('<img src="' + imageURL + '" style="width:200px;height:auto">');    
-                }
+
             }    
         }
         
