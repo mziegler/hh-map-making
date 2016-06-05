@@ -9,11 +9,7 @@
     
     <!-- Weirdly-named CSV parsing libary -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
-
-    <!-- Leaflet heat-map plugin   https://github.com/Leaflet/Leaflet.heat -->
-    <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
-    
-    
+   
             
 </head>
 <body>
@@ -23,11 +19,6 @@
 
     <script type="text/javascript">
         
-        
-        
-        
-        ///////////////////////////////////////////////////////////////////////
-        // MAP SETUP
         
         
         // Initialize the map
@@ -56,14 +47,8 @@
         
         
         
-        
-        
-        ///////////////////////////////////////////////////////////////////////
-        // MARKER + PICTURE LAYER
-        
-        
         // Create a new layer group to hold the markers.
-        var markerLayer = L.layerGroup();//.addTo(map);
+        var markerLayer = L.layerGroup().addTo(map);
         
         
         // This function is called when the CSV file finishes loading.
@@ -96,41 +81,6 @@
         
         
         
-        
-        ///////////////////////////////////////////////////////////////////////
-        // HEAT MAP LAYER
-        
-        
-        var heatLayer = L.heatLayer([]).addTo(map);
-        
-        
-        
-        function addHeatData(data) {
-            // Loop over CSV rows.
-            for (var i = 0; i < data.length; i++) {
-                var row = data[i];
-             
-                heatLayer.addLatLng([row.latitude, row.longitude]);    
-            }
-
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         // Load and parse the CSV file.
         Papa.parse('india-biodiversity-data/swallowtail-butterflies.csv', {
             download: true,
@@ -139,25 +89,12 @@
             
             // This function is called when the CSV file loads completely
             complete: function(results) {
-                
-                addHeatData(results.data);
                 addMarkerData(results.data);
             },
         });
         
 
-        
-        // Overlay-picker control
-        overlays = {
-            'Markers': markerLayer,
-            'Heat': heatLayer,
-        };
-        L.control.layers(overlays, null).addTo(map);
-        
-        
-        
-        
-        
+       
         
         
     </script>
