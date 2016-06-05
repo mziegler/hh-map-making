@@ -1,0 +1,20 @@
+Open-source mapping resources:
+
+
+Open Street Map:
+https://www.openstreetmap.org
+
+Open Street Map editor:
+https://josm.openstreetmap.de/
+
+Leaflet -- open-source slippy maps
+http://leafletjs.com/
+
+Leaflet plugins
+http://leafletjs.com/plugins.html
+
+D3 -- more complicated geospatial visualizations
+http://d3js.org/
+
+QGIS -- desktop program for editing geospatial data
+http://qgis.org

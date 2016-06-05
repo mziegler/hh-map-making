@@ -1,0 +1,167 @@
+<html>
+<head>
+
+    <title>Swallow-tail butterfly map</title>
+
+    <!-- Leaflet web map library   http://leafletjs.com/ -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    
+    <!-- Weirdly-named CSV parsing libary -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+
+    <!-- Leaflet heat-map plugin   https://github.com/Leaflet/Leaflet.heat -->
+    <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    
+    
+            
+</head>
+<body>
+
+    <!-- map container -->
+    <div id="map_id" style="width:100%; height:100%;"></div>
+
+    <script type="text/javascript">
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////////////////
+        // MAP SETUP
+        
+        
+        // Initialize the map
+        // TODO #1 : Initialize the map!
+        var map = L.map('map_id');
+        
+
+
+
+        // OpenStreetMap   http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+        // OpenTopoMap     http://c.tile.opentopomap.org/{z}/{x}/{y}.png
+        // OSM Stamen Watercolor  http://d.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg
+        // More base maps here:   http://mc.bbbike.org/mc/
+        
+        // TODO #2  Add a tile layer for a base map.
+        L.tileLayer('http://c.tile.opentopomap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        
+        
+        
+        
+        // TODO #3  Set the view of the map to show India.
+        map.fitBounds([ [8,69] , [34,97] ]);
+        
+        
+        
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////////////////
+        // MARKER + PICTURE LAYER
+        
+        
+        // Create a new layer group to hold the markers.
+        var markerLayer = L.layerGroup();//.addTo(map);
+        
+        
+        // This function is called when the CSV file finishes loading.
+        function addMarkerData(data) {
+            
+            // Loop over CSV rows.
+            for (var i = 0; i < data.length; i++) {
+                var row = data[i];
+                var imageURL = row['image file'].split(', ')[0];
+                                                
+                                                
+                                                
+                // TODO #4                             
+                // Add a marker to the map with the coordinates from the data point.
+                var marker = L.marker([row.latitude, row.longitude])
+                    .addTo(markerLayer);
+                
+                
+                
+                // TODO #5
+                // If there is an image for this data point, create a popup on this marker.
+                // '<img src="' + imageURL + '" style="width:200px;height:auto">'
+                if (imageURL) {
+                    marker.bindPopup('<img src="' + imageURL + '" style="width:200px;height:auto">');    
+                }
+            }    
+        }
+        
+        
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////////////////
+        // HEAT MAP LAYER
+        
+        
+        var heatLayer = L.heatLayer([]).addTo(map);
+        
+        
+        
+        function addHeatData(data) {
+            // Loop over CSV rows.
+            for (var i = 0; i < data.length; i++) {
+                var row = data[i];
+             
+                heatLayer.addLatLng([row.latitude, row.longitude]);    
+            }
+
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Load and parse the CSV file.
+        Papa.parse('india-biodiversity-data/swallowtail-butterflies.csv', {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            
+            // This function is called when the CSV file loads completely
+            complete: function(results) {
+                
+                addHeatData(results.data);
+                addMarkerData(results.data);
+            },
+        });
+        
+
+        
+        // Overlay-picker control
+        overlays = {
+            'Markers': markerLayer,
+            'Heat': heatLayer,
+        };
+        L.control.layers(overlays, null).addTo(map);
+        
+        
+        
+        
+        
+        
+        
+    </script>
+
+
+</body>
+</html>
