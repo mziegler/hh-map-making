@@ -27,22 +27,20 @@
         
 
 
+        
+        // TODO #2  Set the view of the map to show India.
+        map.fitBounds([ [8,69] , [34,97] ]);
+
+
+
 
         // OpenStreetMap   http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
         // OpenTopoMap     http://c.tile.opentopomap.org/{z}/{x}/{y}.png
         // OSM Stamen Watercolor  http://d.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg
         // More base maps here:   http://mc.bbbike.org/mc/
         
-        // TODO #2  Add a tile layer for a base map.
+        // TODO #3  Add a tile layer for a base map.
         L.tileLayer('http://c.tile.opentopomap.org/{z}/{x}/{y}.png').addTo(map);
-        
-        
-        
-        
-        
-        // TODO #3  Set the view of the map to show India.
-        map.fitBounds([ [8,69] , [34,97] ]);
-        
         
         
         
@@ -57,7 +55,7 @@
             // Loop over CSV rows.
             for (var i = 0; i < data.length; i++) {
                 var row = data[i];
-                var imageURL = row['image file'].split(', ')[0];
+                var imageURL = row['image file'] ? row['image file'].split(', ')[0] : null;
                                                 
                                                 
                                                 
